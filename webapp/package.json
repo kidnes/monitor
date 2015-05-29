@@ -1,0 +1,26 @@
+{
+  "name": "gulp-tools",
+  "version": "1.0.0",
+  "description": "Gulp starter with common tasks and scenarios",
+  "engines": {
+    "node": "0.10.36",
+    "npm": "2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/greypants/gulp-starter.git"
+  },
+  "scripts": {
+    "test": "gulp build:production"
+  },
+  "dependencies": {
+    "webpack": "^1.9.4",
+    "gulp": "^3.8.7",
+    "gulp-notify": "^2.2.0",
+    "gulp-swig": "^0.7.4",
+    "gulp-util": "^3.0.4",
+    "require-dir": "^0.1.0"
+  },
+  "devDependencies": {
+  }
+}
