@@ -1,0 +1,31 @@
+{#
+  Swig Templating!
+  Docs: http://paularmstrong.github.io/swig/docs/
+#}
+
+{% extends 'layouts/application.html' %}
+
+{% block title %}前端监控预警系统{% endblock %}
+
+{% block head %} 
+    <style type="text/css">
+        .north { height: 50px; background: url("./images/header_bg.png"); background-position: 100% -50px; }
+        .south { height: 50px; background: #A9FACD; padding: 10px; }
+        .west { width: 200px; padding: 10px; }
+        .east { width: 100px; padding: 10px; }
+
+        .logo { width: 250px; height: 50px; float: left; background: url("./images/logo.png") no-repeat;}
+    </style>
+{% endblock %}
+
+{% block content %}
+  {% include "shared/north.html" %}
+  {% include "shared/west.html" %}
+  {% include "shared/east.html" %}
+  {% include "shared/south.html" %}
+  {% include "shared/center.html" %}
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="./js/index.js"></script>
+{% endblock %}

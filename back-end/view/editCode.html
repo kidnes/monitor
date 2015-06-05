@@ -1,0 +1,121 @@
+{#
+  Swig Templating!
+  Docs: http://paularmstrong.github.io/swig/docs/
+#}
+
+{% extends 'layouts/application.html' %}
+
+{% block title %}code码编辑管理{% endblock %}
+
+{% block content %}
+<script>
+{{ codeMap }}
+</script>
+
+<table id="dg" class="easyui-datagrid" title="code码编辑管理" style="width:700px;height:auto"
+        data-options="
+            iconCls: 'icon-edit',
+            singleSelect: true,
+            toolbar: '#tb',
+            data: codeMap,
+            method: 'get',
+            onDblClickRow: onDblClickRow,
+            onClickRow: onClickRow
+        ">
+    <thead>
+        <tr>
+            <th data-options="field:'code',width:100,editor:'numberbox'">code码</th>
+            <th data-options="field:'message',width:300,editor:'textbox'">错误信息</th>
+            <th data-options="field:'owner',width:148,editor:'textbox'">所属于</th>
+            <th data-options="field:'email',width:150,editor:'textbox'">email</th>
+        </tr>
+    </thead>
+</table>
+<div id="tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">Append</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">Remove</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Accept</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">Reject</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a>
+</div>
+
+<script type="text/javascript">
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onDblClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function onClickRow(index){
+        if (editIndex != index){
+            endEditing()
+        }
+    }
+    function append(){
+        if (endEditing()){
+            $('#dg').datagrid('appendRow',{});
+            editIndex = $('#dg').datagrid('getRows').length-1;
+            $('#dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+        }
+    }
+    function removeit(){
+        if (!$('#dg').datagrid('getSelected')){return}
+
+        var index = $('#dg').datagrid('getRowIndex', 
+                    $('#dg').datagrid('getSelected'));
+
+        $('#dg').datagrid('cancelEdit', index)
+                .datagrid('deleteRow', index);
+
+        editIndex = undefined;
+    }
+    function accept(){
+        if (endEditing()){
+            var updated = $('#dg').datagrid('getChanges', 'inserted').concat(
+                    $('#dg').datagrid('getChanges', 'updated')),
+                deleted = $('#dg').datagrid('getChanges', 'deleted');
+
+            if (updated.length > 0 || deleted.length > 0) {
+                $.post('updateCodeMap', {updated: updated, deleted: deleted}, function(callback){
+                    if (callback.code == 200) {
+                        $('#dg').datagrid('acceptChanges');
+                    }
+                });
+            }
+            
+        }
+    }
+    function reject(){
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges(){
+        var rows = $('#dg').datagrid('getChanges');
+        alert(rows.length+' rows are changed!');
+    }
+</script>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<!-- <script type="text/javascript" src="./js/editCode.js"></script> -->
+{% endblock %}

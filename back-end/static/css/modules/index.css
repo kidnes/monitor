@@ -1,0 +1,4 @@
+.north { height: 60px; background: #B3DFDA; padding: 10px; }
+.south { height: 50px; background: #A9FACD; padding: 10px; }
+.west { width: 200px; padding: 10px; }
+.east { width: 100px; padding: 10px; }

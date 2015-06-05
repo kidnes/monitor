@@ -1,6 +1,6 @@
 var config = {}
 
-config.publicDirectory = "./dist/";
+config.publicDirectory = "../back-end/static/";
 config.sourceDirectory = "./app/";
 
 module.exports = config;

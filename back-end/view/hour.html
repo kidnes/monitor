@@ -1,0 +1,98 @@
+{#
+  Swig Templating!
+  Docs: http://paularmstrong.github.io/swig/docs/
+#}
+
+{% extends 'layouts/application.html' %}
+
+{% block title %}code码编辑管理{% endblock %}
+
+{% block content %}
+<script>{{ codeMap }}</script>
+<div id="container" style="height:400px"></div>
+
+<table id="dg" class="easyui-datagrid" title="code码列表" style="width:auto;height:auto"
+        data-options="
+            iconCls: 'icon-edit',
+            singleSelect: true,
+            toolbar: '#tb',
+            data: codeMap,
+
+        ">
+    <thead>
+        <tr>
+            <th data-options="field:'code',width:100,editor:'numberbox'">code码</th>
+            <th data-options="field:'message',width:300,editor:'textbox'">错误信息</th>
+            <th data-options="field:'owner',width:148,editor:'textbox'">所属于</th>
+            <th data-options="field:'email',width:150,editor:'textbox'">email</th>
+        </tr>
+    </thead>
+</table>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+$('#container').highcharts({
+    chart: {
+        type: 'column',
+        margin: [ 50, 20, 100, 70]
+    },
+    title: {
+        text: '时间段：{{ timePeriods }}'
+    },
+    xAxis: {
+        categories: [{{ categories }}],
+        labels: {
+            enabled: true,
+            rotation: -45,
+            align: 'right',
+            style: {
+                fontSize: '10px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '每五分钟的错误条数'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        formatter: function() {
+            return '错误码：'+this.x+'<b><br/>错误信息：'+ codeMap[this.x] +'</b><br/>'+ '对应条数: '+ Highcharts.numberFormat(this.y,0);
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    exporting:{ 
+        enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示 
+    },
+    series: [{
+        name: '错误码',
+        data: [{{ errCount }}],
+        dataLabels: {
+            enabled: false,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            x: 4,
+            y: 10,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif',
+                textShadow: '0 0 3px black'
+            }
+        }
+    }]
+});
+
+</script>
+<!-- <script type="text/javascript" src="./js/editCode.js"></script> -->
+{% endblock %}

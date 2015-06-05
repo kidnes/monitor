@@ -11,7 +11,8 @@ module.exports = function(env) {
   var webpackConfig = {
     entry: {
       index: [jsSrc + 'index.js'],
-      editCode: [jsSrc + 'page/editCode.js']
+      editCode: [jsSrc + 'page/editCode.js'],
+      minCount: [jsSrc + 'page/minCount.js'],
     },
 
     output: {

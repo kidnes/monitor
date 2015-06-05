@@ -6,7 +6,9 @@ $('#codeList').datagrid({
     height: 'auto',
     fit: true,
     border: false,
-    url: '/api/getCodeMap',
+    singleSelect: true,
+    data: codeMap,
+    // url: '/api/getCodeMap',
     method: 'get',
     columns: [[{
         field: 'code',

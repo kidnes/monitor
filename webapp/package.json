@@ -19,6 +19,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-swig": "^0.7.4",
     "gulp-util": "^3.0.4",
+    "gulp-watch": "^4.2.4",
     "require-dir": "^0.1.0"
   },
   "devDependencies": {

@@ -14,9 +14,8 @@ function getMinTimeKey(cur) {
     return [year, month, date, hour, min].join('');
 }
 
-function getHourTimeKey() {
-    var cur = new Date(new Date().getTime() - 3600000),
-        year = cur.getFullYear(),
+function getHourTimeKey(cur) {
+    var year = cur.getFullYear(),
         month = cur.getMonth()+1,
         date = cur.getDate(),
         hour = cur.getHours();
