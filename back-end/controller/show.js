@@ -2,25 +2,18 @@ var redis       = require("redis");
 var map         = require('../lib/codeMap');
 var time        = require('./timeKeyManage');
 
-
 function* renderMintue () {
-    var codeMap = yield map.getCodeMapGen();
-    var timeKey = time.getLastTimeKey();
+    var timeKey = time.getCurTimeKey();
+    // var timeKey = time.getLastTimeKey();
+    var codeMap = yield map.getTimeRangeCount(timeKey),
+        code = [];
 
-    var code = [],
-        count = 0;
-
-    var client = redis.createClient();
     for (var item in codeMap) {
-        count = yield function(done) {
-            client.get('code:'+item+':'+timeKey, done);
-        }
-
-        code.push({code: item, message: codeMap[item], count: Number(count)});
+        code.push(codeMap[item]);
     }
 
     code.sort(function(item1, item2) {
-        return item1.count > item2.count;
+        return item1.count < item2.count;
     })
 
     var item, categories = [], errCount =[] ;
@@ -31,29 +24,77 @@ function* renderMintue () {
     }
 
     var opt = {};
-    opt.codeMap = "var codeMap = " + JSON.stringify(code);
+    opt.codeMap = "var codeMap = " + JSON.stringify(codeMap);
     opt.categories = categories;
     opt.errCount = errCount;
     opt.timePeriods = formatTime(timeKey) || timeKey;
     return opt;
 }
 
-function formatTime(str) {
-    if (str.length !== 12) return;
+function* renderDay() {
+    var arr = getDayArr();
+    var rows = [], codeMap, temp;
 
-    var arr = str.match(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/);
-    var year = arr.slice(1, 4).join('-');
-    var time = arr.slice(4).join(':');
-    var date1 = new Date(year+' '+time);
-    var date2 = new Date(date1.getTime() + 300000);
-    var hour = date2.getHours(),
-        min = date2.getMinutes();
+    for (var i = 0; i < arr.length -1; i++) {
+        codeMap = yield map.getTimeRangeCount(arr[i], arr[i+1]);
+        temp = {'day': formatDay(arr[i])};
+        
+        for (var code in codeMap) {
+            temp[code] = codeMap[code].count;
+        }
+
+        rows.push(temp);
+    }
+
+    return rows;
+}
+
+function getDayArr() {
+    var date = new Date();
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+
+    var cur = new Date(y+'/'+m+'/'+d+' 00:00:00').getTime(), lastCur;
+    var arr = [];
+    for (var i = 0; i < 8; i++) {
+        lastCur = (new Date(cur - i*86400000).getTime())/1000>>0; //86400000=60*60*24*1000
+        arr.unshift(lastCur);
+    }
+    return arr;
+}
+
+function formatDay(time) {
+    var date = new Date(time*1000);
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+
+    m = m < 10 ? '0'+m : m;
+    d = d < 10 ? '0'+d : d;
     
-    hour    = hour < 10 ? '0'+hour : hour;
-    min     = min < 10 ? '0'+min : min;
+    return m+'-'+d;
+}
 
-    return year+' '+time+' - '+hour+':'+min;
+function formatTime(time) {
+    var date = new Date(time*1000);
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+    var h = date.getHours();
+    var min = date.getMinutes();
 
+    var date2 = new Date(date.getTime() - 300000);
+    var h2 = date2.getHours();
+    var min2 = date2.getMinutes();
+
+    m = m < 10 ? '0'+m : m;
+    d = d < 10 ? '0'+d : d;
+    h = h < 10 ? '0'+h : h;
+    min = min < 10 ? '0'+min : min;
+    h2 = h2 < 10 ? '0'+h2 : h2;
+    min2 = min2 < 10 ? '0'+min2 : min2;
+
+    return y+'-'+m+'-'+d+' '+h2+':'+min2+' - '+h+':'+min;
 }
 
 
@@ -101,5 +142,13 @@ exports.hour = function* () {
 }
 
 exports.day = function* () {
-    yield this.render('day', opt);
+    var dayCount = yield renderDay();
+    
+    yield this.render('day', {dayCount: JSON.stringify(dayCount)});
 }
+
+exports.query = function* () {
+    // var opt = yield renderMintue();
+    yield this.render('query');
+}
+

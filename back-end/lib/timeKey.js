@@ -5,13 +5,8 @@ function getMinTimeKey(cur) {
         hour = cur.getHours(),
         min = Math.floor(cur.getMinutes()/5)*5;
 
-    month   = month < 10 ? '0'+month : month;
-    date    = date < 10 ? '0'+date : date;
-    hour    = hour < 10 ? '0'+hour : hour;
-    min     = min < 10 ? '0'+min : min;
-
-    
-    return [year, month, date, hour, min].join('');
+    var result = new Date(year+'/'+month+'/'+date+' '+hour+':'+min+':00');
+    return result.getTime()/1000>>0;
 }
 
 function getHourTimeKey(cur) {

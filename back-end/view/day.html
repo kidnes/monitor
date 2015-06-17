@@ -8,12 +8,30 @@
 {% block title %}code码编辑管理{% endblock %}
 
 {% block content %}
+<script>var dayCount = {{ dayCount }}</script>
 
+<!-- <table id="dg" class="easyui-datagrid" title="code码列表" style="width:auto;height:auto"
+        data-options="
+            iconCls: 'icon-edit',
+            singleSelect: true,
+            toolbar: '#tb',
+            data: codeMap
+        ">
+    <thead>
+        <tr>
+            <th data-options="field:'code',width:100,editor:'numberbox'">code码</th>
+            <th data-options="field:'message',width:300,editor:'textbox'">错误信息</th>
+            <th data-options="field:'owner',width:148,editor:'textbox'">所属于</th>
+            <th data-options="field:'email',width:150,editor:'textbox'">email</th>
+        </tr>
+    </thead>
+</table> -->
 
+<table id="dg"></table>
 {% endblock %}
 
 
 
 {% block javascript %}
-<!-- <script type="text/javascript" src="./js/editCode.js"></script> -->
+<script type="text/javascript" src="./js/day.js"></script>
 {% endblock %}

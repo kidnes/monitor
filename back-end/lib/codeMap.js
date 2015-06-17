@@ -32,6 +32,31 @@ function delCodeMap(cmd) {
     }
 }
 
+function* getRangeCount(code, st, et) {
+    var count = 0, temp;
+
+    var client = redis.createClient();
+
+    var allkeys = yield function(done) {
+        client.keys('code:'+code+':*', done);
+    }
+
+    keys = [];
+    for (var i = 0; i < allkeys.length; i++) {
+        temp = Number(allkeys[i].replace('code:'+code+':', ''));
+        if (temp >= st && temp <= et) keys.push(allkeys[i]);
+    }
+
+    for (var i = 0; i < keys.length; i++) {
+        temp = yield function(done) {
+            client.get(keys[i], done);
+        }
+        count += Number(temp);
+    }
+
+    return count;
+}
+
 exports.getCodeMapPromise = function() {
     return new Promise(function(resolve, reject) {
         var client = redis.createClient();
@@ -68,6 +93,22 @@ exports.getCodeMapAPI = function*() {
     }
     
     return JSON.stringify(arr);
+}
+
+exports.getRangeCount = getRangeCount;
+
+exports.getTimeRangeCount = function*(st, et) {
+    if (typeof et === 'undefined') et = (new Date().getTime())/1000>>0;
+
+    var codeMap = yield exports.getCodeMapGen();    
+
+    for (var item in codeMap) {
+        var count = yield getRangeCount(item, st, et);
+        codeMap[item].code = item;
+        codeMap[item].count = Number(count);
+    }
+
+    return codeMap;
 }
 
 exports.updateCodeMap = function *(body) {

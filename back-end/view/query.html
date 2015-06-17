@@ -1,0 +1,47 @@
+{#
+  Swig Templating!
+  Docs: http://paularmstrong.github.io/swig/docs/
+#}
+
+{% extends 'layouts/application.html' %}
+
+{% block title %}错误码查询{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<br/>
+日期：<input id="start-time" class="easyui-datetimebox" style="width:150px" data-options="showSeconds:false" style="width:200px">
+<span>&nbsp;-&nbsp;</span>
+<input id="end-time" class="easyui-datetimebox" style="width:150px" data-options="showSeconds:false" style="width:200px">&nbsp;&nbsp;
+错误码:<input id="err-code" value="310" style="width:80px">&nbsp;&nbsp;
+类型:<select id="query-type" style="width: 60px;">
+<option value="0">小时</option>
+<option value="1">分钟</option>
+</select>&nbsp;&nbsp;
+<span style="font-size:12px">注意：分钟以五分钟为单位区间，向后五分钟</span>&nbsp;&nbsp;
+<button id="search" style="width:80px">检索</button>
+<br/><br/>
+
+<script>
+function formatData(val, row){
+    return (val+'').replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+}
+</script>
+<table id="dg" class="easyui-datagrid" title="查询结果" style="width:800px;height:100%;" data-options="singleSelect:true">
+    <thead>
+        <tr>
+            <th data-options="field:'time',width:400">时间</th>
+            <th data-options="field:'count',width:400,formatter:formatData">错误数</th>
+        </tr>
+    </thead>
+</table>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<script type="text/javascript" src="./js/query.js"></script>
+{% endblock %}

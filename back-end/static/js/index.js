@@ -1,19 +1,25 @@
-webpackJsonp([1,3],[
-/* 0 */
+webpackJsonp([4,6],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(2);
+	module.exports = __webpack_require__(7);
 
 
 /***/ },
-/* 1 */,
-/* 2 */
+
+/***/ 7:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3)
+	__webpack_require__(8);
+
+	$(function(){
+	    le.addTab({title:'分钟统计', url:'./minute.html'});
+	})
 
 /***/ },
-/* 3 */
+
+/***/ 8:
 /***/ function(module, exports, __webpack_require__) {
 
 	window.le = {
@@ -74,4 +80,5 @@ webpackJsonp([1,3],[
 	};
 
 /***/ }
-]);
+
+});

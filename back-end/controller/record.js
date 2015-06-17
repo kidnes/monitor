@@ -6,7 +6,8 @@ var map         = require('../lib/codeMap');
 function pushToRedis(key) {
     var client = redis.createClient();
 
-    client.incr(key, redis.print);
+    client.incr(key);
+    // client.incr(key, redis.print);
 
     client.quit();
 

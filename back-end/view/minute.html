@@ -47,7 +47,7 @@ $('#container').highcharts({
     },
     tooltip: {
         formatter: function() {
-            return '错误码：'+this.x+'<b><br/>错误信息：'+ codeMap[this.x] +'</b><br/>'+ '对应条数: '+ Highcharts.numberFormat(this.y,0);
+            return '错误码：'+this.x+'<b><br/>错误信息：'+ codeMap[this.x].message +'</b><br/>'+ '对应条数: '+ Highcharts.numberFormat(this.y,0);
         }
     },
     credits: {
