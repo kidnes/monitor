@@ -1,17 +1,28 @@
-webpackJsonp([2,6],{
+webpackJsonp([4,7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(3);
+	module.exports = __webpack_require__(8);
 
 
 /***/ },
 
-/***/ 3:
+/***/ 6:
 /***/ function(module, exports, __webpack_require__) {
 
-	var lib = __webpack_require__(10);
+	function formatData(val, row){
+	    return (val+'').replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+	}
+
+	exports.formatData = formatData;
+
+/***/ },
+
+/***/ 8:
+/***/ function(module, exports, __webpack_require__) {
+
+	var lib = __webpack_require__(6);
 
 	function init() {
 	    var columns = [];
@@ -46,17 +57,6 @@ webpackJsonp([2,6],{
 	}
 
 	init();
-
-/***/ },
-
-/***/ 10:
-/***/ function(module, exports, __webpack_require__) {
-
-	function formatData(val, row){
-	    return (val+'').replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-	}
-
-	exports.formatData = formatData;
 
 /***/ }
 

@@ -1,4 +1,4 @@
-var redis       = require("redis");
+var client      = require("./redis").getClient();
 var map         = require('../lib/codeMap');
 var timeKey     = require('../lib/timeKey');
 
@@ -48,14 +48,13 @@ function update() {
 }
 
 function updateKey(key) {
-    var client = redis.createClient();
     for (var item in codeMap) {
         var code = 'code:' + item;
         client.hget([code, key], function(err, replise) {
             if (replise) {
-                client.hincrby([code, key.slice(0, -2), Number(replise)], redis.print)  //更新小时数据
+                client.hincrby([code, key.slice(0, -2), Number(replise)])  //更新小时数据
 
-                client.hincrby([code, key.slice(0, -4), Number(replise)], redis.print)  //更新当天数据
+                client.hincrby([code, key.slice(0, -4), Number(replise)])  //更新当天数据
             }
         })
         

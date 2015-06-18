@@ -1,15 +1,11 @@
 var url         = require("url");
-var redis       = require("redis");
 var timeKey     = require('./timeKeyManage');
 var map         = require('../lib/codeMap');
+var client      = require("../controller/redis").getClient();
 
 function pushToRedis(key) {
-    var client = redis.createClient();
 
     client.incr(key);
-    // client.incr(key, redis.print);
-
-    client.quit();
 
     debug('pushToRedis:'+key);
 }

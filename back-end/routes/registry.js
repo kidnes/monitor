@@ -2,6 +2,7 @@ var koaBody     = require('koa-body')();
 var show        = require('../controller/show');
 var api         = require('../controller/api');
 var record      = require('../controller/record');
+var login       = require('../controller/login');
 
 
 function routes(app) {
@@ -12,11 +13,16 @@ function routes(app) {
     app.get('/hour.html',        show.hour)
     app.get('/day.html',         show.day)
     app.get('/query.html',       show.query)
+    app.get('/read.html',        show.read)
 
     app.get('/getHourRangeData',         api.getHourRangeData)
     app.get('/getErrRangeData',          api.getErrRangeData)
+    app.get('/readLog',                  api.readLog)
     
-    app.post('/updateCodeMap',   koaBody, record.updateCodeMap)
+    app.post('/updateCodeMap',  koaBody, record.updateCodeMap)
+
+    app.get('/login',           login.getLogin)
+    app.post('/login',          koaBody, login.checkLogin)
     
 }
 

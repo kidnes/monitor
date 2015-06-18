@@ -1,41 +1,31 @@
-var redis       = require("redis");
+var client      = require("../controller/redis").getClient();
 
 var DEFAULT_MAP_NAME = "codeMapList";
 
 function getCodeMap() {
-    var client = redis.createClient();
 
     return function(done) {
         client.hgetall([DEFAULT_MAP_NAME], done);
-
-        client.quit();
     }
 }
 
+
 function updateCodeMap(cmd) {
-    var client = redis.createClient();
 
     return function(done) {
         client.hmset(cmd, done);
-
-        client.quit();
     }
 }
 
 function delCodeMap(cmd) {
-    var client = redis.createClient();
 
     return function(done) {
         client.hdel(cmd, done);
-
-        client.quit();
     }
 }
 
 function* getRangeCount(code, st, et) {
     var count = 0, temp;
-
-    var client = redis.createClient();
 
     var allkeys = yield function(done) {
         client.keys('code:'+code+':*', done);
@@ -59,12 +49,10 @@ function* getRangeCount(code, st, et) {
 
 exports.getCodeMapPromise = function() {
     return new Promise(function(resolve, reject) {
-        var client = redis.createClient();
 
         client.hgetall([DEFAULT_MAP_NAME], function(err, replies){
             if (replies) resolve(replies);
 
-            client.quit();
         });
         
     });

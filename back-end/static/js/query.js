@@ -1,17 +1,19 @@
-webpackJsonp([1,6],{
-
-/***/ 0:
+webpackJsonp([2,7],[
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(2);
+	module.exports = __webpack_require__(5);
 
 
 /***/ },
-
-/***/ 2:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var lib = __webpack_require__(10);
+	var lib = __webpack_require__(6);
 
 
 	$('#search').on('click', renderData);
@@ -65,8 +67,7 @@ webpackJsonp([1,6],{
 	$(init);
 
 /***/ },
-
-/***/ 10:
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	function formatData(val, row){
@@ -76,5 +77,4 @@ webpackJsonp([1,6],{
 	exports.formatData = formatData;
 
 /***/ }
-
-});
+]);

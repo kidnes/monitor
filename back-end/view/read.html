@@ -1,0 +1,81 @@
+{#
+  Swig Templating!
+  Docs: http://paularmstrong.github.io/swig/docs/
+#}
+
+{% extends 'layouts/application.html' %}
+
+{% block title %}读取日志{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<br/>
+<table>
+    <tbody>
+        <tr>
+            <td>日期：&nbsp;&nbsp;<input id="j-date" class="easyui-datetimebox" style="width:180px" data-options="showSeconds:false" style="width:200px">&nbsp;&nbsp;</td>
+            <td>时长(单位分钟，最长60分钟):&nbsp;&nbsp;<input id="j-timeLen" value="5" style="width:80px">&nbsp;&nbsp;</td>
+            <td>故障ID:&nbsp;&nbsp;<input id="j-code" value="310" style="width:80px">&nbsp;&nbsp;</td>
+            <td><button id="search" style="width:80px">检索</button>&nbsp;&nbsp;</td>
+            <td>日志量大的错误码读取比较耗时，耐心等待。</td>
+        </tr>
+    </tbody>
+</table>
+
+<br/>
+
+<table id="dg" class="easyui-datagrid" style="width:auto;height:100%;" 
+    data-options="
+        singleSelect:true,
+        fitColumns:true,
+        onDblClickRow: onDblClickRow,
+        onClickRow: onClickRow
+    ">
+    <thead>
+        <tr>
+            <th data-options="field:'time',width:60">故障时间</th>
+            <th data-options="field:'ip',width:60,editor:'textbox'">IP地址</th>
+            <th data-options="field:'logurl',width:200,editor:'textbox'">上报URL</th>
+            <th data-options="field:'url',width:200,editor:'textbox'">事发URL</th>
+            <th data-options="field:'ua',width:700,editor:'textbox'">事发UserAgent</th>
+        </tr>
+    </thead>
+</table>
+{% endblock %}
+
+
+
+{% block javascript %}
+<script type="text/javascript" src="./js/read.js"></script>
+<script>
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onDblClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function onClickRow(index){
+        if (editIndex != index){
+            endEditing()
+        }
+    }
+</script>
+{% endblock %}

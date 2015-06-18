@@ -1,0 +1,56 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<link media="screen" href="http://img1.c0.letv.com/ptv/images/mms/main.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+    function checkForm(){
+        var username = document.login.username.value;
+        var password = document.login.password.value;
+        if( username == '' ){
+            alert('请输入用户名');
+            document.login.username.focus();
+            return false;
+        }else if( password == '' ){
+            alert('请输入密码');
+            document.login.password.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+</head>
+<body id="login">
+    <div id="wrappertop"></div>
+    <div id="wrapper">
+        <div id="content">
+            <div id="header">
+                <h1>
+                    <a href="http://www.letv.com/"><img src="http://img1.c0.letv.com/ptv/images/nlist/logo_n.jpg"></a>
+                </h1>
+            </div>
+            <div class="banner320" id="darkbanner">
+                <h2><font style="font-size: medium;">网络应用软件监控系统</font></h2>
+            </div>
+            <div id="darkbannerwrap"></div>
+            <form name="login" action="/login" method="post" onsubmit="return checkForm();">
+            <fieldset class="form">
+                <p>
+                    <label for="user_name">用户名：</label> <input type="text" name="username" id="username"/> 
+                </p>
+                <p>
+                    <label for="user_password">密码：</label> <input type="password" name="password" id="password" />
+                </p>
+                <button class="positive" name="submit" type="submit">
+                <img alt=announcement src="http://img1.c0.letv.com/ptv/images/cms/key.png">登录</button> 
+                &nbsp;&nbsp;
+                {{ msgTip }}
+            </fieldset> 
+            </form>
+        </div>
+        <div id="wrapperbottom_branding_text">CopyRight &copy; 2012 <a href="http://www.letv.com" target="_blank">www.letv.com</a></div>
+    </div>
+</body>
+</html>

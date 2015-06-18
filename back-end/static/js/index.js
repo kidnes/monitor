@@ -1,17 +1,17 @@
-webpackJsonp([4,6],{
+webpackJsonp([5,7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(7);
+	module.exports = __webpack_require__(9);
 
 
 /***/ },
 
-/***/ 7:
+/***/ 9:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
+	__webpack_require__(10);
 
 	$(function(){
 	    le.addTab({title:'分钟统计', url:'./minute.html'});
@@ -19,7 +19,7 @@ webpackJsonp([4,6],{
 
 /***/ },
 
-/***/ 8:
+/***/ 10:
 /***/ function(module, exports, __webpack_require__) {
 
 	window.le = {

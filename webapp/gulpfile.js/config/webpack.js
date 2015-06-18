@@ -15,7 +15,8 @@ module.exports = function(env) {
       minCount: [jsSrc + 'page/minCount.js'],
       hour: [jsSrc + 'page/hour.js'],
       day: [jsSrc + 'page/day.js'],
-      query: [jsSrc + 'page/query.js']
+      query: [jsSrc + 'page/query.js'],
+      read: [jsSrc + 'page/read.js']
     },
 
     output: {

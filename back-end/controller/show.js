@@ -1,4 +1,3 @@
-var redis       = require("redis");
 var map         = require('../lib/codeMap');
 var time        = require('./timeKeyManage');
 
@@ -150,5 +149,10 @@ exports.day = function* () {
 exports.query = function* () {
     // var opt = yield renderMintue();
     yield this.render('query');
+}
+
+exports.read = function* () {
+    // var opt = yield renderMintue();
+    yield this.render('read');
 }
 
