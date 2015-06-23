@@ -3,9 +3,12 @@ var show        = require('../controller/show');
 var api         = require('../controller/api');
 var record      = require('../controller/record');
 var login       = require('../controller/login');
+var passport    = require('../routes/passport');
 
 
 function routes(app) {
+    
+
     app.get('/dc.gif',           record.emptyGif)
     app.get('/',                 show.index)
     app.get('/editCode.html',    show.editCode)
@@ -23,6 +26,8 @@ function routes(app) {
 
     app.get('/login',           login.getLogin)
     app.post('/login',          koaBody, login.checkLogin)
+    
+    // app.use(passport);
     
 }
 

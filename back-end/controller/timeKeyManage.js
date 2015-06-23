@@ -41,8 +41,6 @@ function update() {
 
         lastTimeKey = curTimeKey;
         curTimeKey = time;
-
-        console.log('curTimeKey:'+curTimeKey);
     })
 
 }

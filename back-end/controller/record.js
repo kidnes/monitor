@@ -6,8 +6,6 @@ var client      = require("../controller/redis").getClient();
 function pushToRedis(key) {
 
     client.incr(key);
-
-    debug('pushToRedis:'+key);
 }
 
 exports.emptyGif = function* () {
