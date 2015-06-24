@@ -103,19 +103,9 @@ exports.index = function* () {
 
 exports.editCode = function* () {
     var codeMap = yield map.getCodeMapGen();
-    var code = [], item, obj = {};
-
-    // for (var key in codeMap) {
-    //     item = key.split(':');
-    //     if (item.length == 2) {
-    //         if (typeof obj[item[0]] === 'undefined') obj[item[0]] = {};
-    //         obj[item[0]][item[1]] = codeMap[key];
-    //     }
-    // }
 
     var result = [];
     for (var key in codeMap) {
-        codeMap[key]['code'] = key;
         result.push(codeMap[key]);
     }
 

@@ -1,13 +1,20 @@
-webpackJsonp([6,7],[
+webpackJsonp([1,7],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(11);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
 /* 1 */,
-/* 2 */,
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(3);
+	__webpack_require__(4);
+	// require('../lib/bar');
+
+/***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -325,20 +332,6 @@ webpackJsonp([6,7],[
 	"highcharts-menu-"+a.btnCount++;b.symbol&&(g=d.symbol(b.symbol,b.symbolX-q/2,b.symbolY-q/2,q,q).attr(p(k,{"stroke-width":b.symbolStrokeWidth||1,zIndex:1})).add(e));e.add().align(p(b,{width:e.width,x:f.pick(b.x,y)}),!0,"spacingBox");y+=(e.width+b.buttonSpacing)*(b.align==="right"?-1:1);a.exportSVGElements.push(e,g)}},destroyExport:function(c){var c=c.target,a,d;for(a=0;a<c.exportSVGElements.length;a++)if(d=c.exportSVGElements[a])d.onclick=d.ontouchstart=null,c.exportSVGElements[a]=d.destroy();for(a=
 	0;a<c.exportDivElements.length;a++)d=c.exportDivElements[a],C(d,"mouseleave"),c.exportDivElements[a]=d.onmouseout=d.onmouseover=d.ontouchstart=d.onclick=null,n(d)}});F.menu=function(c,a,d,b){return["M",c,a+2.5,"L",c+d,a+2.5,"M",c,a+b/2+0.5,"L",c+d,a+b/2+0.5,"M",c,a+b-1.5,"L",c+d,a+b-1.5]};A.prototype.callbacks.push(function(c){var a,d=c.options.exporting,b=d.buttons;y=0;if(d.enabled!==!1){for(a in b)c.addButton(b[a]);t(c,"destroy",c.destroyExport)}})})(Highcharts);
 
-
-/***/ },
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(3);
-	__webpack_require__(4);
-	// require('../lib/bar');
 
 /***/ }
 ]);

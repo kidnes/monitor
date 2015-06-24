@@ -18,20 +18,6 @@ function* checkUser(username) {
     return false;
 }
 
-// function* checkLogin(username, password) {
-//     var isLdap = yield ldap(username, password);
-
-//     if (!isLdap) return false;
-
-//     var base64 = require('../lib/base64').encode(username+':'+(new Date().getTime()));
-
-//     var key = 'session:'+base64;
-//     client.set([key, 1]);
-//     client.expire([key, 86400]);
-
-//     return true;
-// }
-
 function* checkUserAuth(username) {
     var userList = yield function(done) {
         client.lrange(['user', 0, -1], done);

@@ -1,6 +1,8 @@
 var client      = require("./redis").getClient();
 var map         = require('../lib/codeMap');
 var timeKey     = require('../lib/timeKey');
+var mail        = require('./mail');
+var co          = require('co');
 
 var codeMap, curTimeKey, lastTimeKey;
 
@@ -29,15 +31,15 @@ function startTime() {
 }
 
 function update() {
-    
-    map.getCodeMapPromise().then(function(data){
-        codeMap = data;
 
-        // updateKey(curTimeKey);
+    co(function*(){
+        codeMap = yield map.getCodeMapGen();
 
         var time = timeKey.getMinTimeKey(new Date());
 
         if (time == curTimeKey) return;
+
+        yield asnms(lastTimeKey);
 
         lastTimeKey = curTimeKey;
         curTimeKey = time;
@@ -57,6 +59,65 @@ function updateKey(key) {
         })
         
     }
+}
+
+function* asnms(key) {
+    var lastKey = (new Date((key - 86400)*1000).getTime())/1000>>0;
+    for (var item in codeMap) {
+        var lastCount = yield function(done) {
+            client.get('code:'+item+':'+lastKey, done);
+        }
+
+        var curCount = yield function(done) {
+            client.get('code:'+item+':'+key, done);
+        }
+        
+        if (lastCount > 100 && curCount > lastCount * 5) {
+            var option = codeMap[item];
+            option.count = curCount;
+            option.time = key;
+            yield sendMail(option);
+        }
+    }
+}
+
+function* sendMail(codeOption) {
+    var config = require('../config/mail').client;
+
+    var html = "<html><br/><br/><p style='font-size:18px; color:#336699;'>错误码: "+codeOption.code+" 在时间段：" + foramtTime(codeOption.time)+" 比昨日相同时间段高出5倍："+ codeOption.count + "</p>";
+
+    var option = {
+        from    : config.from,
+        to      : config.to,
+        subject : config.subject.replace(/{{code}}/, codeOption.code),
+        text    : html
+    }
+
+    
+    yield mail.sendMail(option);
+    
+}
+
+function foramtTime(time) {
+    var date = new Date(time*1000);
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+    var h = date.getHours();
+    var min = date.getMinutes();
+
+    var date2 = new Date(date.getTime() - 300000);
+    var h2 = date2.getHours();
+    var min2 = date2.getMinutes();
+
+    m = m < 10 ? '0'+m : m;
+    d = d < 10 ? '0'+d : d;
+    h = h < 10 ? '0'+h : h;
+    min = min < 10 ? '0'+min : min;
+    h2 = h2 < 10 ? '0'+h2 : h2;
+    min2 = min2 < 10 ? '0'+min2 : min2;
+
+    return y+'-'+m+'-'+d+' '+h2+':'+min2+' - '+h+':'+min;
 }
 
 init();

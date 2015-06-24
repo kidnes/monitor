@@ -15,7 +15,23 @@
 > INCR code:301:1434507600
 > KEYS code:301:1434507600
 
-# code值码分配表
+## 3、user
+类型：list
+字段：user
+说明：维护用户登录列表，列表中用户有权限查看系统
+
+# 服务器运维
+
+## crontab任务
+// 每天凌晨执行日志分割和删除操作
+0    0    *    *    *   /letv/monitor/back-end/server/nginx/log_splite_del.sh
+
+## 启动后台程序
+nohup forever -c "node --harmony" app.js > /dev/null
+forever restart app.js
+
+
+# code码分配表
 code值从100至999，分配如下：
 100至299为主站使用；
 300至499为M站使用；
