@@ -39,7 +39,7 @@ function renderCharts() {
             }
 
             code.sort(function(item1, item2){
-                return item1.count < item2.count;
+                return item2.count - item1.count;
             })
 
             var opt = { categories: [], errCount:[] };
