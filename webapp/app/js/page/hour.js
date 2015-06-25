@@ -82,7 +82,7 @@ function showCharts(opt) {
         yAxis: {
             min: 0,
             title: {
-                text: '每五分钟的错误条数'
+                text: '每小时的错误条数'
             }
         },
         legend: {

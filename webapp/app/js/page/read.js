@@ -9,7 +9,7 @@ function init() {
 
 
 function initTime() {
-    var date = new Date(new Date().getTime() - 3600000);
+    var date = new Date(new Date().getTime() - 300000);
 
     $('#j-date').datetimebox('setValue', formatTime(date));
 }
