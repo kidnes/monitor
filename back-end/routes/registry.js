@@ -1,5 +1,5 @@
 var koaBody     = require('koa-body')();
-var show        = require('../controller/show');
+var show        = require('../show/show');
 var api         = require('../controller/api');
 var record      = require('../controller/record');
 var login       = require('../controller/login');

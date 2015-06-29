@@ -1,11 +1,12 @@
 # 数据库字段及说明：
 
-## 1、codeMapList 
-类型：list
-说明：存储code码映射表，程序中每5分钟检测数据库更新一次
+## 1、codeMap 
+类型：hash
+说明：存储code码映射表
 示例：
-> lpush codeMapList '310'
-> lrange codeMapList 0 -1
+> hgetall codeMap
+> hget codeMap 301
+> hset codeMap 301 "{\"code\":\"301\",\"owner\":\"liubin1\",\"email\":\"liubin1@letv.com\",\"message\":\"error code\"}"
 
 ## 2、code:301:1434507600
 类型：hashs
