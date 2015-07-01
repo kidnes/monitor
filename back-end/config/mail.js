@@ -9,6 +9,6 @@ exports.connect = {
 
 exports.client = {
     from : "liubin1@letv.com",
-    to : "<liubin1@letv.com>, <liubin1@letv.com>",
+    to : "liubin1@letv.com",
     subject : "【前端监控预警系统】错误码 {{code}} 异常"
 }

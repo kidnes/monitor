@@ -2,7 +2,7 @@ var email       = require("emailjs");
 var config      = require('../config/mail');
 var server      = email.server.connect(config.connect);
 
-exports.sendMail = function* (option) {debugger;
+exports.sendMail = function* (option) {
     
 
     var message = {
@@ -17,6 +17,7 @@ exports.sendMail = function* (option) {debugger;
 
     var res = yield function(done) {
         server.send(message, function(err, res) {
+            console.log(err || res);
             done(null, res || err);
         });
     }
