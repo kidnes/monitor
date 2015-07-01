@@ -44,10 +44,10 @@ function getData() {
 }
 
 function formatData(json) {
-    var reg = /(\d+\.\d+\.\d+\.\d+).+\[(.+)\].+?".+?\s(.+?)\s.+?".+?"(.+?)"\s"(.+?)"/;
+    var reg = /(\d+\.\d+\.\d+\.\d+).+?\[(.+?)\].+?".+?\s(.+?)\s.+?".+?"(.+?)"\s"(.+?)"/;
 
     var item, result = [];
-    for (var i = 0; i < json.length && i < 500; i++) {
+    for (var i = 0; i < json.length && i < 1000; i++) {
         item = json[i].match(reg);
         if (item && item.length >= 5) {
             result.push({
